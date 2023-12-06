@@ -131,3 +131,4 @@ cython_debug/
 #.idea/
 .Rproj.user
 LazarEtAl_xxx_202x.Rproj
+.Rhistory
