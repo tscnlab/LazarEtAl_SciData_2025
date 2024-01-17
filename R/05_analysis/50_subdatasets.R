@@ -427,6 +427,31 @@ opt_table_font(data= Sample_phase_tab, font = "Arial")  %>%
 gtsave(Sample_phase_tab,        # save table as pdf
        filename = "R/06_output/Sample_phase_tab.pdf")
 
+
+### modify calibration summary table------------------------------------------------------
+
+
+Cali_model_tab<- read.csv(file="Matlab/Calibration_files/Cali_model_tab.csv",
+                          check.names = FALSE)
+
+Cali_model_tab <- Cali_model_tab %>% gt() %>% 
+  cols_align("center")
+opt_table_font(data= Cali_model_tab, font = "Arial")  %>%
+  #adjust the fontsize of the cell bodies and footnotes 
+  tab_style(style=cell_text(size=px(7)), locations=list(cells_body(),
+                                                        cells_footnotes()
+  )
+  ) %>%
+  #adjust the cell title font sizes and padding
+  tab_style(style=cell_text(size=px(9), weight="bold"),
+            locations=list(cells_column_labels())
+  ) %>% tab_options(data_row.padding = px(4)) -> Cali_model_tab
+
+
+gtsave(Cali_model_tab,        # save table as pdf
+       filename = "R/06_output/Cali_model_tab.pdf")
+
+
 ### [8] Saving subdatasets----------------------------------------------------------------------------------------------------------
 
 #save all created subdataset in the environment via save.image

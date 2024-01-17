@@ -114,7 +114,7 @@ dem_data %>%
                  handedness ~ "Handedness (self-report)",
                  visual_aid ~ "Uses visual aid",
                  contact_lenses ~ "Wearing contact lenses during trial",
-                 MSFsc ~  "MSFsc",
+                 MSFsc ~  "Midsleep on free days corrected for oversleep [h]",
                  sleeping_hours ~ "Hours of sleep before trial [h]",
                  SDweek ~ "Average sleep duration [h]",
                  acute_sum ~ "Estimated acute caffeine consumption [mg]",
