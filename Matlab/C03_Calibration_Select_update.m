@@ -1,8 +1,11 @@
+
+% Turn off warnings
+warning('off', 'all');
+
 % Setting the working directory and add path:
 % The matlab codes need to be run from the same folder that contains the 
-% "Calibration_files" subfolder in order to use the code below to add the
+% "Calibration_files" subfolder. When this is done, you can use the the code below to add the
 % subfolders to the path
-
 
 scriptDirectory = fileparts(mfilename('fullpath'));
 addpath(genpath(fullfile(scriptDirectory, 'Calibration_files')));
@@ -201,3 +204,5 @@ end
 cd(whichfolder)
 save('Calibration_files/Calibration.mat',"Calibration")
 
+% Restore previous warning state
+warning('on', 'all');
