@@ -139,5 +139,6 @@ lablog_RSOS-191613.xlsx
 *.pdf
 *.jpg
 #ignore rawdata etc. from RR
+*Pre-processing/
 *luox-processing/
 
