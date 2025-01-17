@@ -43,7 +43,7 @@ dem_data <- select(dem_data, id, excl, excl_time, date, begin, age, age_group,
                    visual_acuity_snellen, BMI, MSFsc, time_awake, sleeping_hours,
                    SDweek, acute_sum, acute_sum_rel, habitual_sum_rel, 
                    habitual_sum, iris_colour, weather, kss_pre, kss_post,
-                   time_awake, season
+                   time_awake, season, overthrs75
                    )
 
 #rename the factors for the time of exclusion variable
@@ -56,13 +56,17 @@ dem_data %>%
 # 
 # dem_data$excl_time[dem_data$id=="SP040" | dem_data$id=="SP058" | dem_data$id=="SP061" | dem_data$id=="SP106"] <- "Included"
 
-dem_data  <- dem_data[which(dem_data$excl=="results"),]
+dem_data  <- dem_data[which(dem_data$excl_time=="Included" & dem_data$overthrs75==FALSE),]
 
 #drop factor levels of dem_Data because they interfere with creating the 
 #demographic table
-dem_data <- droplevels(dem_data)
+dem_data <- droplevels(dem_data) 
+
+dem_data <- dem_data %>% select (-overthrs75)
 
 
+dem_data_csv <- dem_data %>% select(-excl, -excl_time, - visual_acuity_snellen)
+write.csv(dem_data_csv, file="./R/03_output/Tables/demographic_data.csv")
 
 #[2] Demographic table ---------------------------------------------------------
 #create demographic table with gt summary:
@@ -142,12 +146,12 @@ desc_table_gt[["_boxhead"]][["column_label"]][[6]] <- "Valid data, n=83"
 #set the font to Arial
 desc_table_gt <- opt_table_font(data= desc_table_gt, font = "Arial")  %>%
   #adjust the cell bodies and footnotes to be fontsize 9
-  tab_style(style=cell_text(size=px(11)), locations=list(cells_body(),
+  tab_style(style=cell_text(size=px(8)), locations=list(cells_body(),
                                                             cells_footnotes()
                                                             )
   ) %>%
   #adjust the cell title to be fontsize 9.75
-  tab_style(style=cell_text(size=px(13)),
+  tab_style(style=cell_text(size=px(10)),
                             locations=cells_column_labels()
             ) %>% tab_options(data_row.padding = px(4))
 

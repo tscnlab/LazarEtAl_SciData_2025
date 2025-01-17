@@ -202,6 +202,9 @@ ggsave("./R/03_output/Figures/autocor_panels.png", plot = autocor_panel ,
 
 
 ## [6] Plotting  pupil & lido cross correlation ---------------------------------
+# creating min and max indices for plotting
+
+load(file="./R/01_processed_data/lido_plotting.rda")
 
 
 #### Plotting the timeline -------------------------------------------------------
@@ -235,7 +238,7 @@ oo_timeline <- gg_binned +
            color ="#999999", fill= "#999999", width = 10)+
   annotate("text", x=2100, y=100000,
            label= paste(paste("OceanInsight STS-VIS")))+
-  ggtitle("A")+# Timeline of Light Exposure
+  #ggtitle("B")+# Timeline of Light Exposure
   theme(plot.title =element_text(size = 12, face="bold"),
         legend.position = "none", axis.title = element_text(face = "plain",
                                                             size = 11))
@@ -266,18 +269,18 @@ A <- grid.arrange(A1, A2, nrow = 2,
 
 #### Plotting the Correlation data -------------------------------------------------------
 
-rr <- cor.test(binned_data_all_lido$melirrad_oo, binned_data_all_lido$melirrad_lido,
+rr <- cor.test(binned_data_all$melirrad_oo, binned_data_all$melirrad_lido,
                alternative = c("two.sided"),
                method = c("pearson"),
                exact = NULL, conf.level = 0.95, continuity = FALSE)
 
-r<-(cor(binned_data_all_lido$melirrad_oo, binned_data_all_lido$melirrad_lido, 
+r<-(cor(binned_data_all$melirrad_oo, binned_data_all$melirrad_lido, 
         method='pearson',
         use = "complete.obs"))
 
 
 
-gg_binned_all<-ggplot(binned_data_all_lido, 
+gg_binned_all<-ggplot(binned_data_all, 
                       aes(shape = Dataset,
                           fill = Dataset))+
   scale_fill_manual(values=c("#D4A66A", "#486E88", "#999999"))+
@@ -313,7 +316,7 @@ Corr_plot <- gg_binned_all+
            label= paste("~italic(p )< .001"), parse = T)+
   theme(legend.position = c(.75, .23), axis.title = element_text(size = 11))+
 theme_classic()+
-  ggtitle("B")+
+  #ggtitle("C")+
   theme(plot.title = element_text(size = 12, face="bold"),  aspect.ratio = 1/1)
 
 B  <- ggplotGrob(Corr_plot)
@@ -361,6 +364,7 @@ ggsave("./R/03_output/Figures/Lido_comp_plot.png", plot = plot_panelAB ,
        width = 200, height = 150, units = "mm", 
        bg = "white")
 
+# Picture (subfigure A) was  added manually
 
 
 
@@ -467,8 +471,6 @@ opt_table_font(data= Sum_tab, font = "Arial")  %>%
 #   
 gtsave(Sum_tab,        # save table as pdf
        filename = "./R/03_output/Tables/Sum_tab.pdf")
-
-
 
 
 
@@ -620,4 +622,49 @@ gtsave(Sample_phase_tab,        # save table as pdf
 
 
 
+### Saturated & erroneous spectral samples 
+
+# # identify saturated / erroenous spectral data
+# # copied in 21_qualitychecks.R after "data_loss_satspec<- round(f/d*100, 2)"
+
+# rawdata_incl <- rawdata_ID_all %>% filter(id %in% id_list)
+# saturated_dat<- rawdata_incl[rawdata_incl$phot_lux==0,]
+# 
+# saturated_dat_corr <- saturated_dat[329:333,]
+# 
+# 
+# saturated_dat_corr <- saturated_dat %>% mutate(
+#   sample_nr = 
+#     case_when(id=="SP093" & sample_nr>20 ~ sample_nr+1,
+#               .default=sample_nr)
+# )
+# # identify saturated / erroenous spectral data
+
+
+load(file="./R/01_processed_data/merged_data_incl.rda")
+load(file="./R/01_processed_data/saturated_dat_corr.rda")
+
+
+placeholder <- merged_data_incl %>% 
+add_row(sample_nr = 20, `Original file`="20211116011218.jpg", diameter_3d=NA,
+        confidence=0, id="SP093", excl="results", excl_time="Included",
+        data_loss=0.4504021, log_MelIrrad=NA, log_phot_lux=NA, Mel_EDI=NA, 
+        log_Mel_EDI=NA, exp_phase="Dark",
+        .before = 24932)
+
+placeholder <- placeholder %>% mutate(
+  sample_nr =
+    case_when(id=="SP093" & sample_nr>20 ~ sample_nr+1,
+              .default=sample_nr)
+)
+
+#match saturated dataframe and the original filenames from the placeholder 
+#via id and sample nr to create a csv where all 410 saturated samples are listed
+
+sat_files <- placeholder %>%
+  semi_join(saturated_dat_corr, by = c("id", "sample_nr"))
+
+sat_files <- sat_files %>% mutate (`ID`=id, `File no.` = sample_nr+1, `File name`= `Original file`) %>%  select (`ID`, `File no.`,`File name`)
+  
+write.csv(sat_files, file = "./R/03_output/Tables/sat_files.csv", row.names = FALSE)
 
