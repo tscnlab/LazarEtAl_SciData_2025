@@ -141,6 +141,8 @@ cython_debug/
 *.png
 *.pdf
 darkcalibr_poly31_V2.txt
+#Matlab/Calibration_files/dark_spectra_pss02-05/*
+#Matlab/Calibration_files/pilot dark spectra/*
 
 # Table exceptions
 !Cali_model_tab.pdf

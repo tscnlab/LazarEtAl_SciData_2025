@@ -64,7 +64,7 @@ dem_data <- droplevels(dem_data)
 
 dem_data <- dem_data %>% select (-overthrs75)
 
-
+#save main demgraphic data into csv metadata file
 dem_data_csv <- dem_data %>% select(-excl, -excl_time, - visual_acuity_snellen)
 write.csv(dem_data_csv, file="./R/03_output/Tables/demographic_data.csv")
 

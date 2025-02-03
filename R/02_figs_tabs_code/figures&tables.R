@@ -44,8 +44,8 @@ source("./R/02_figs_tabs_code/ggplot_functions.R")
 
 ### [3] Case data age comparison-------------------------------------------------------------
 
-#Figure 6: comparing age case data, dose response
-#use the agecomp dataset for comparing a typical 18-year old & 87-year-old subject
+#Figure: comparing age case data
+#use the agecomp dataset for comparing a typical young, middle-aged & old subject
 #x-axis: mEDI; y-axis: pupil size (mm) for a single participant
 # horizontal lines give maximum pupil range
 
@@ -97,7 +97,7 @@ ggsave("./R/03_output/Figures/agecomp_plot.png", plot = agecomp_plot ,
        bg = "white")
 
 
-### [4] Plot example spectra FIg 1 Sci Dat.-----------------------------------------
+### [4] Plot example spectra Fig 1 Sci Dat.-----------------------------------------
 
 exalight<-read_csv("./R/01_processed_data/subdata/example_spectra.csv")
 
