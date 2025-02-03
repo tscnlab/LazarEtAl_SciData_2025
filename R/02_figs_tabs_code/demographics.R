@@ -1,4 +1,4 @@
-###preparing environment: unloaded prior packages, loading new ones----
+# prepare environment: unloaded prior packages, loading new ones----
 
 #unload packages that were loaded before (run function twice to "catch" all pkgs)
 #this is a workaround to avoid masking problems when running the scripts successively
@@ -26,7 +26,7 @@ library(gtsummary)
 library(gt)
 library(webshot2)
 
-### [1] Demographic data preparation -------------------------------------------
+# [1] Demographic data preparation -------------------------------------------
 #Prepare data for demographic tables & figure
 
 #load complete merged dataset
@@ -68,7 +68,7 @@ dem_data <- dem_data %>% select (-overthrs75)
 dem_data_csv <- dem_data %>% select(-excl, -excl_time, - visual_acuity_snellen)
 write.csv(dem_data_csv, file="./R/03_output/Tables/demographic_data.csv")
 
-#[2] Demographic table ---------------------------------------------------------
+# [2] Demographic table ---------------------------------------------------------
 #create demographic table with gt summary:
 
 #first categorize the data into data types.

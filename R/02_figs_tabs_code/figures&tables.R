@@ -1,4 +1,4 @@
-###preparing environment: unloaded prior packages, loading new ones----
+# Prepare environment: unloaded prior packages, loading new ones----
 
 #unload packages that were loaded before (run function twice to "catch" all pkgs)
 #this is a workaround to avoid masking problems when running the scripts successively
@@ -33,16 +33,16 @@ library(gt)
 set.seed(20230703) 
 
 
-### [1] Loading subdatasets---------------------------------------------------
+# [1] Load subdatasets---------------------------------------------------
 
 load(file="./R/01_processed_data/subdata/conf_subdata.rda")
 
-### [2] Source ggplot functions-------------------------------------------------------
+# [2] Source ggplot functions-------------------------------------------------------
 
 #use ggplot functions defined in the functions-script
 source("./R/02_figs_tabs_code/ggplot_functions.R")
 
-### [3] Case data age comparison-------------------------------------------------------------
+# [3] Case data age comparison-------------------------------------------------------------
 
 #Figure: comparing age case data
 #use the agecomp dataset for comparing a typical young, middle-aged & old subject
@@ -97,7 +97,7 @@ ggsave("./R/03_output/Figures/agecomp_plot.png", plot = agecomp_plot ,
        bg = "white")
 
 
-### [4] Plot example spectra Fig 1 Sci Dat.-----------------------------------------
+# [4] Plot example spectra Fig 1 Sci Dat.-----------------------------------------
 
 exalight<-read_csv("./R/01_processed_data/subdata/example_spectra.csv")
 
@@ -129,7 +129,7 @@ ggsave("./R/03_output/Figures/example_spectra.png", plot = exa ,
        bg = "white")
 
 
-### [5] Autocorrelation ------------------
+# [5] Plot Autocorrelation ------------------
 
 #using the ggacf helper function to create AUtocor Fig A
 #get rid of axis labels for subplot for larger Figure
@@ -201,16 +201,16 @@ ggsave("./R/03_output/Figures/autocor_panels.png", plot = autocor_panel ,
 
 
 
-## [6] Plotting  pupil & lido cross correlation ---------------------------------
-# creating min and max indices for plotting
+# [6] Plot  pupil & lido cross correlation ---------------------------------
+# create min and max indices for plotting
 
 load(file="./R/01_processed_data/lido_plotting.rda")
 
 
-#### Plotting the timeline -------------------------------------------------------
+#### plot the timeline -------------------------------------------------------
 plot_labs <-  c("Time of Experiment [min]", "Melanopic Irradiance [mW/m²]", "Pupil Size [mm]")  
 
-#setting up vars that allow empty ticks (empty label slots)
+#set up vars that allow empty ticks (empty label slots)
 g<-seq(10, time_max/60, 10)
 k = rbind(g, rep(" ", n=length(g)))
 k<-k[-12]
@@ -267,7 +267,7 @@ A <- grid.arrange(A1, A2, nrow = 2,
 
 #, bottom = plot_labs[[1]])
 
-#### Plotting the Correlation data -------------------------------------------------------
+#### plot the correlation data -------------------------------------------------------
 
 rr <- cor.test(binned_data_all$melirrad_oo, binned_data_all$melirrad_lido,
                alternative = c("two.sided"),
@@ -324,7 +324,7 @@ plot(B)
 
 
 
-#### arranging all plots into subplots-------------------------------------
+#### arrange all plots into subplots-------------------------------------
 
 
 allplotslist <- align_plots(A, B, align = "hv", axis = 'b')
@@ -368,7 +368,7 @@ ggsave("./R/03_output/Figures/Lido_comp_plot.png", plot = plot_panelAB ,
 
 
 
-### [6] modify calibration summary table from csv ------------------
+# [7] Modify matlab calibration summary table from csv ------------------
 
 
 Cali_model_tab<- read.csv(file="Matlab/Calibration_files/Cali_model_tab.csv",
@@ -394,7 +394,7 @@ gtsave(Cali_model_tab,        # save table as pdf
 
 
 
-#create subdataset for Sci Dat. overview tables ---------------------------------
+#### create subdataset for Sci Dat. overview tables ---------------------------------
 
 #by mistake there is a missing row in SP093 (Dark). The observation was not valid though.
 #correct number of rows and high quality data
@@ -474,7 +474,7 @@ gtsave(Sum_tab,        # save table as pdf
 
 
 
-# [7] create supplementary table with data on the experimental phases-----------------------
+# [8] create table with data on the experimental phases-----------------------
 
 
 Sample_phase <- plus %>%
@@ -622,23 +622,9 @@ gtsave(Sample_phase_tab,        # save table as pdf
 
 
 
-### Saturated & erroneous spectral samples 
+# [9] Create list of Saturated & erroneous spectral samples -----------------------------------
 
-# # identify saturated / erroenous spectral data
-# # copied in 21_qualitychecks.R after "data_loss_satspec<- round(f/d*100, 2)"
-
-# rawdata_incl <- rawdata_ID_all %>% filter(id %in% id_list)
-# saturated_dat<- rawdata_incl[rawdata_incl$phot_lux==0,]
-# 
-# saturated_dat_corr <- saturated_dat[329:333,]
-# 
-# 
-# saturated_dat_corr <- saturated_dat %>% mutate(
-#   sample_nr = 
-#     case_when(id=="SP093" & sample_nr>20 ~ sample_nr+1,
-#               .default=sample_nr)
-# )
-# # identify saturated / erroenous spectral data
+# identify saturated / erroenous spectral data
 
 
 load(file="./R/01_processed_data/merged_data_incl.rda")

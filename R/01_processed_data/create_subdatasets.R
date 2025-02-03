@@ -1,4 +1,4 @@
-###preparing environment: unloaded prior packages, loading new ones----
+# prepare environment: unloading prior packages, loading new ones----
 
 #unload packages that were loaded before (run function twice to "catch" all pkgs)
 #this is a workaround to avoid masking problems when running the scripts successively
@@ -26,12 +26,12 @@ library(gtExtras)
 set.seed(20230703) 
 
 
-### [1] Load merged data ------------------------------------------------------
+# [1] Load merged data ------------------------------------------------------
 #loading merged data with included participants 
 load(file="./R/01_processed_data/merged_data_conf.rda")
 load(file="./R/01_processed_data/mergeddata_all.rda")
 
-### [2] General Subdatasets ------------------------------------------------------------
+# [2] General Subdatasets ------------------------------------------------------------
 
 #remove data with missing pupil and save into cf_data sub dataset
 cf_data <- merged_data_conf[!is.na(merged_data_conf$diameter_3d),] 
@@ -87,7 +87,7 @@ Darkfield <- cf_data [!is.na(cf_data$exp_phase)  & ((cf_data$exp_phase == "Field
 Darklab <-  cf_data [!is.na(cf_data$exp_phase)  & ((cf_data$exp_phase == "Lab" |
                                                   cf_data$exp_phase == "Dark")),]
 
-### [4] Subdataset for weather data -------------------------------------------
+# [3] Subdataset for weather data -------------------------------------------
 
 
 #creating subdata set with weather data 
@@ -101,7 +101,7 @@ weatherdata <- merged_data_conf[merged_data_conf$exp_phase == "Field" &
          phot_lux, MelIrrad, Mel_EDI,
          weather, exp_phase, season)
 
-### [5] Subdatasets for case data -------------------------------------------
+# [4] Subdatasets for case data -------------------------------------------
 
 #create "agecomp data" for Figure 6 (plotting only)
 # comparing 3 typical subjects at 20 and 80 and 51 years old
@@ -130,7 +130,7 @@ for (i in 1: nrow(agecomp)){
 }
 
 
-### [6] Subdatasets for autocorrelation  ---------------------------------------
+# [5] Subdatasets for autocorrelation  ---------------------------------------
 #autocorrelation approach (create subdata set) for Suppl. Fig. 4
 
 #create a subdataset with all NAs still included (no missing rows) 
@@ -200,7 +200,7 @@ pupil_acf <- data.frame(cor = acf(autocor_data$diameter_3d,
 
 
 
-### [7] Saving subdatasets------------------------------------------------------
+# [6] Saving subdatasets------------------------------------------------------
 #save all created subdataset in the environment via save.image
 save.image(file="./R/01_processed_data/subdata/conf_subdata.rda")
 
