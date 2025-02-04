@@ -1,13 +1,14 @@
-# Code Repository for Data Descriptor Publication
+# Code Repository
+## Joint infrared pupil images and near-corneal-plane spectral light exposure data in natural conditions across the adult lifespan.
 
 This code repository is part of the data descriptor publication: 
 **“Joint infrared pupil images and near-corneal-plane spectral light exposure data in natural conditions across the adult lifespan.”**
 
 It is publicly accessible under the MIT license (see `LICENSE.md` file). The dataset accompanying this publication is available on FigShare under the CC-BY 4.0 license: **Joint infrared pupil images and near-corneal-plane spectral light exposure data in natural conditions across the adult lifespan - Dataset.** [https://doi.org/10.6084/m9.figshare.28176839](https://doi.org/10.6084/m9.figshare.28176839) 
-Preprocessed data and supporting material based on the same raw data is publicly accessible in the following locations:
+Processed data and supporting material based on the same raw data is publicly accessible in the following locations:
 
 - **Registered report:** [https://doi.org/10.1098/rsos.191613](https://doi.org/10.1098/rsos.191613)
-- **Pre-processed dataset used in registered report:** [https://doi.org/10.6084/m9.figshare.24230848.v3](https://doi.org/10.6084/m9.figshare.24230848.v3) 
+- **Processed dataset used in registered report:** [https://doi.org/10.6084/m9.figshare.24230848.v3](https://doi.org/10.6084/m9.figshare.24230848.v3) 
 - **R code repository for registered report:** [https://doi.org/10.5281/zenodo.14678627](https://doi.org/10.5281/zenodo.14678627) 
 - **Additional supporting materials:** [https://doi.org/10.6084/m9.figshare.24230890.v1](https://doi.org/10.6084/m9.figshare.24230890.v1) 
 
